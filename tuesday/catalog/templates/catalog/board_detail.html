@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ board.name }}</h1><hr>
+  <table>
+    <tr><th>Задание</th><th>Задействованные работники</th><th>Срок</th><th>Статус</th></tr>
+    {% for task in board.task_set.all %}
+    <tr><td>{{ task.description }}</td><td>{% for contributor in board.contributors.all %}<p>{{ contributor }}</p>{% endfor %}</td>
+      <td>{{ task.deadline }}</td><td><p class="{% if task.status == 'w' %}text-warning{% elif task.status == 'fn' %}text-success{% else %}text-danger{% endif %}">{{ task.get_status_display }}</p></td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}
